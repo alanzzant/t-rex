@@ -76,7 +76,7 @@ function setup() {
 
   for(let i = 0; i < cactusNumber; i++) {
     cactus.push(new Cactus(
-      getRandomValue(canvas.width, canvas.width + 200),
+      getRandomValue(canvas.width, canvas.width + 300),
       canvas.height - 12 - 34,
       VX,
       getRandomValue(1, 5),
@@ -134,7 +134,7 @@ function loop() {
 
       for(let i = 0; i < cactusNumber; i++) {
         cactus.push(new Cactus(
-          getRandomValue(canvas.width, canvas.width + 100),
+          getRandomValue(canvas.width - 100, canvas.width + 400),
           canvas.height - 14 - 34,
           VX,
           getRandomValue(0, 5),
