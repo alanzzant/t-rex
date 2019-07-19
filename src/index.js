@@ -59,6 +59,7 @@ function setup() {
       getRandomValue(0, canvas.height - 14),
       1
     ))
+    clouds[i].img.onload = clouds[i].draw(ctx)
   }
 
   for(let i = 0; i < 2; i++) {
