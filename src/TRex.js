@@ -18,8 +18,8 @@ class TRex {
     this.isJumping = false // Activates the jump() function
     this.doubleJump = false // This is to double jump
 
-    this.jumpSound = new Audio('../res/jump.wav')
-    this.dieSound = new Audio('../res/game-over.wav')
+    this.jumpSound = new Audio('./res/jump.wav')
+    this.dieSound = new Audio('./res/game-over.wav')
 
     this.img = img
   }
