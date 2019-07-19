@@ -21,7 +21,7 @@ sessionStorage.setItem('record', 0)
 let trex
 let floor = []
 let cactus = []
-let cactusNumber = getRandomValue(1, 2)
+let cactusNumber = getRandomValue(1, 3)
 let clouds = []
 let cloudsNumber = 3
 const intervals = []
@@ -142,7 +142,7 @@ function loop() {
         ))
       }
 
-      cactusNumber = getRandomValue(1, 2)
+      cactusNumber = getRandomValue(0, 3)
     }
     
     if(trex.didCollide(cac.getX() + 9, cac.getY() + 2)) {
