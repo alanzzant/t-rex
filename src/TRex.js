@@ -16,8 +16,10 @@ class TRex {
     this.frameCounter = 0 // Double jump
 
     this.isJumping = false // Activates the jump() function
-    this.jumpSound = new Audio('../res/jump.wav')
     this.doubleJump = false // This is to double jump
+
+    this.jumpSound = new Audio('../res/jump.wav')
+    this.dieSound = new Audio('../res/game-over.wav')
 
     this.img = new Image()
     this.img.src = '../res/sprite.png'
@@ -56,7 +58,7 @@ class TRex {
   draw(ctx) {
     let sprite
 
-    if(this.isJumping) {
+    if(this.isJumping && this.wichDinosaur != 4) { // Make sure that the dinosaur could die even while jumping
       sprite = 677
     } else {
       sprite = 677 + (this.wichDinosaur * this.width)
@@ -119,6 +121,12 @@ class TRex {
     let collideY = this.y + this.width > cy
 
     return collideX && collideY
+  }
+
+  die(ctx) {
+    this.dieSound.play()
+    this.wichDinosaur = 4 // Die sprite
+    this.draw(ctx)
   }
 }
 
