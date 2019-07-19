@@ -6,7 +6,7 @@ import {getRandomValue} from './Utils.js'
 
 const VX = 3 // Game velocity
 const SPRITE_SHEET = new Image()
-SPRITE_SHEET.src = "alanzzant.github.io/res/sprite.png"
+SPRITE_SHEET.src = "https://alanzzant.github.io/res/sprite.png"
 let gameIsRunning = false
 
 // The canvas is getted, and so the canvas is
