@@ -82,12 +82,6 @@ function setup() {
 // The main loop is defined and time is measured
 function loop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  
-  clouds.forEach(cloud => {
-    if(cloud.getImage().complete) {
-      cloud.update(ctx)
-    }
-  })
 
   drawText(Math.floor(trex.distance / 10), canvas.width - 100, 50)
   drawText(`Record: ${sessionStorage.getItem('record')}m`, canvas.width - 100, 80, null, 15)
@@ -108,17 +102,19 @@ function loop() {
     floor[1].getImage().onload = floor[1].update(ctx)
   }
 
-  for(let i = 0; i < clouds.length; i++) {
-    if((clouds[i].getX() + clouds[i].getWidth() <= 200) && clouds.length < 8) { // Making sure that there aren't so much clouds
+  clouds.forEach((cloud, index) => {
+    cloud.update(ctx)
+
+    if(cloud.getX() + cloud.getWidth() <= canvas.width - 150 && clouds.length < 8) {
       clouds.push(new Cloud(
         getRandomValue(canvas.width, canvas.width + 400),
         getRandomValue(0, canvas.height - 14),
         1
       ))
-    } else if(clouds[i].getX() + clouds[i].getWidth() <= 0) {
-      clouds.splice(i, 1)
+    } else if(cloud.getX() + cloud.getWidth() <= 0) {
+      clouds.splice(index, 1)
     }
-  }
+  })
   
   cactus.forEach((cac, index) => {
     cac.update(ctx)

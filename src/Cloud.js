@@ -1,3 +1,5 @@
+import {getRandomValue} from './Utils.js'
+
 class Cloud {
   constructor(initialX, initialY, dx) {
     this.x = initialX
