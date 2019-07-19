@@ -5,6 +5,8 @@ import Cloud from './Cloud.js'
 import {getRandomValue} from './Utils.js'
 
 const VX = 3 // Game velocity
+const SPRITE_SHEET = new Image()
+SPRITE_SHEET.src = '../res/sprite.png'
 let gameIsRunning = false
 
 // The canvas is getted, and so the canvas is
@@ -50,14 +52,16 @@ function setup() {
   
   trex = new TRex(
     canvas.height - 14 - 47, // 14 is the floor height, 47 is the trex height
-    VX
+    VX,
+    SPRITE_SHEET
   )
 
   for(let i = 0; i < cloudsNumber; i++) {
     clouds.push(new Cloud(
       getRandomValue(canvas.width, canvas.width + 400),
       getRandomValue(0, canvas.height - 14),
-      1
+      1,
+      SPRITE_SHEET
     ))
   }
 
@@ -65,16 +69,18 @@ function setup() {
     floor.push(new Floor(
       1204 * (i - 1),
       canvas.height - 14, // 14 is the floor height
-      VX
+      VX,
+      SPRITE_SHEET
     ))
   }
 
   for(let i = 0; i < cactusNumber; i++) {
     cactus.push(new Cactus(
-      getRandomValue(canvas.width, canvas.width + 200) + (i * 50),
-      canvas.height - 14 - 34,
+      getRandomValue(canvas.width, canvas.width + 200),
+      canvas.height - 12 - 34,
       VX,
-      0
+      getRandomValue(1, 5),
+      SPRITE_SHEET
     ))
   }
 }
@@ -82,6 +88,23 @@ function setup() {
 // The main loop is defined and time is measured
 function loop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+  clouds.forEach((cloud, index) => {
+    cloud.update(ctx)
+
+    if(cloud.getX() + cloud.getWidth() <= canvas.width - 150 && clouds.length < 8) {
+      clouds.push(
+        new Cloud(
+          getRandomValue(canvas.width, canvas.width + 400),
+          getRandomValue(0, canvas.height - 14),
+          1,
+          SPRITE_SHEET
+        )
+      )
+    } else if (cloud.getX() + cloud.getWidth() <= 0) {
+      clouds.splice(index, 1)
+    }
+  })
 
   drawText(Math.floor(trex.distance / 10), canvas.width - 100, 50)
   drawText(`Record: ${sessionStorage.getItem('record')}m`, canvas.width - 100, 80, null, 15)
@@ -96,25 +119,12 @@ function loop() {
       new Floor(
         1204,
         canvas.height - 14,
-        VX
+        VX,
+        SPRITE_SHEET
       )
     )
     floor[1].getImage().onload = floor[1].update(ctx)
   }
-
-  clouds.forEach((cloud, index) => {
-    cloud.update(ctx)
-
-    if(cloud.getX() + cloud.getWidth() <= canvas.width - 150 && clouds.length < 8) {
-      clouds.push(new Cloud(
-        getRandomValue(canvas.width, canvas.width + 400),
-        getRandomValue(0, canvas.height - 14),
-        1
-      ))
-    } else if(cloud.getX() + cloud.getWidth() <= 0) {
-      clouds.splice(index, 1)
-    }
-  })
   
   cactus.forEach((cac, index) => {
     cac.update(ctx)
@@ -124,17 +134,18 @@ function loop() {
 
       for(let i = 0; i < cactusNumber; i++) {
         cactus.push(new Cactus(
-          getRandomValue(canvas.width, canvas.width + 100) + (i * 50),
+          getRandomValue(canvas.width, canvas.width + 100),
           canvas.height - 14 - 34,
           VX,
-          0
+          getRandomValue(0, 5),
+          SPRITE_SHEET
         ))
       }
 
       cactusNumber = getRandomValue(1, 2)
     }
     
-    if(trex.didCollide(cac.getX() + 2, cac.getY() + 2)) {
+    if(trex.didCollide(cac.getX() + 9, cac.getY() + 2)) {
       trex.die(ctx)
 
       if(trex.distance > sessionStorage.getItem('record')) {

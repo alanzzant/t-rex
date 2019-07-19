@@ -1,7 +1,7 @@
 import {getRandomValue} from './Utils.js'
 
 class Cactus {
-  constructor(initialX, initialY, dx, expand = 0) {
+  constructor(initialX, initialY, dx, expand = 0, img) {
     this.x = initialX
     this.y = initialY
     this.dx = dx
@@ -10,8 +10,7 @@ class Cactus {
     this.height = 35 + this.expand
     this.wichCactus = getRandomValue(0, 5)
 
-    this.img = new Image()
-    this.img.src = '../res/sprite.png'
+    this.img = img
   }
 
   update(ctx) {
@@ -23,7 +22,7 @@ class Cactus {
   draw(ctx) {
     ctx.drawImage(
       this.img,
-      228 + (this.wichCactus * this.width),
+      228 + this.wichCactus * (this.width - this.expand),
       2,
       this.width - this.expand,
       this.height - this.expand,

@@ -1,14 +1,12 @@
 class Floor {
-  constructor(initialX, initialY, dx) {
+  constructor(initialX, initialY, dx, img) {
     this.x = initialX
-    // this.initialX = initialX
     this.y = initialY
     this.dx = dx
     this.height = 14
     this.width = 1204
 
-    this.img = new Image()
-    this.img.src = '../res/sprite.png'
+    this.img = img
   }
 
   update(ctx) {

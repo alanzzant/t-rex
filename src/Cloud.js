@@ -1,15 +1,12 @@
-import {getRandomValue} from './Utils.js'
-
 class Cloud {
-  constructor(initialX, initialY, dx) {
+  constructor(initialX, initialY, dx, img) {
     this.x = initialX
     this.y = initialY
     this.width = 46
     this.height = 13
     this.dx = dx
 
-    this.img = new Image()
-    this.img.src = '../res/sprite.png'
+    this.img = img
   }
 
   update(ctx) {

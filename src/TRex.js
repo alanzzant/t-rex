@@ -1,7 +1,7 @@
 const GRAVITY = -2.1
 
 class TRex {
-  constructor(initialY, dx) {
+  constructor(initialY, dx, img) {
     this.distance = 0
     this.x = 0
     this.y = initialY
@@ -21,8 +21,7 @@ class TRex {
     this.jumpSound = new Audio('../res/jump.wav')
     this.dieSound = new Audio('../res/game-over.wav')
 
-    this.img = new Image()
-    this.img.src = '../res/sprite.png'
+    this.img = img
   }
 
   update(ctx) {
