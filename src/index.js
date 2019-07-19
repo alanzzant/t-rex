@@ -142,7 +142,7 @@ function loop() {
         ))
       }
 
-      cactusNumber = getRandomValue(0, 3)
+      cactusNumber = getRandomValue(1, 4)
     }
     
     if(trex.didCollide(cac.getX() + 9, cac.getY() + 2)) {
