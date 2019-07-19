@@ -37,6 +37,10 @@ class Cloud {
   getWidth() {
     return this.width
   }
+
+  getImage() {
+    return this.img
+  }
 }
 
 export default Cloud

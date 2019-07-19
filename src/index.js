@@ -59,7 +59,6 @@ function setup() {
       getRandomValue(0, canvas.height - 14),
       1
     ))
-    clouds[i].img.onload = clouds[i].draw(ctx)
   }
 
   for(let i = 0; i < 2; i++) {
@@ -85,7 +84,9 @@ function loop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   
   clouds.forEach(cloud => {
-    cloud.update(ctx)
+    if(cloud.getImage().complete) {
+      cloud.update(ctx)
+    }
   })
 
   drawText(Math.floor(trex.distance / 10), canvas.width - 100, 50)

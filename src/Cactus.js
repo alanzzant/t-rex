@@ -41,14 +41,6 @@ class Cactus {
   getY() {
     return this.y
   }
-
-  getWidth() {
-    this.width
-  }
-
-  getHeight() {
-    this.height
-  }
 }
 
 export default Cactus
