@@ -137,7 +137,7 @@ function loop() {
           getRandomValue(canvas.width - 100, canvas.width + 400),
           canvas.height - 14 - 34,
           VX,
-          getRandomValue(0, 5),
+          getRandomValue(0, 2),
           SPRITE_SHEET
         ))
       }
