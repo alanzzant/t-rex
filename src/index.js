@@ -148,7 +148,7 @@ function loop() {
     if(trex.didCollide(cac.getX() + 9, cac.getY() + 2)) {
       trex.die(ctx)
 
-      if(trex.distance > sessionStorage.getItem('record')) {
+      if(trex.distance/10 > sessionStorage.getItem('record')) {
         sessionStorage.setItem('record', Math.floor(trex.distance / 10))
       }
 
