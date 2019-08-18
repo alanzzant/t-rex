@@ -2,7 +2,7 @@ import TRex from './TRex.js'
 import Floor from './Floor.js'
 import Cactus from './Cactus.js'
 import Cloud from './Cloud.js'
-import {getRandomValue} from './Utils.js'
+import {getRandomValue, generateProbability} from './Utils.js'
 
 const VX = 3 // Game velocity
 const SPRITE_SHEET = new Image()
@@ -19,9 +19,9 @@ drawText("Press [Enter] to play.", canvas.width / 2, canvas.height / 2)
 // Declare objects
 sessionStorage.setItem('record', 0)
 let trex
-let floor = []
+let cactusProbability = 100
 let cactus = []
-let cactusNumber = getRandomValue(1, 3)
+let floor = []
 let clouds = []
 let cloudsNumber = 3
 const intervals = []
@@ -73,16 +73,6 @@ function setup() {
       SPRITE_SHEET
     ))
   }
-
-  for(let i = 0; i < cactusNumber; i++) {
-    cactus.push(new Cactus(
-      getRandomValue(canvas.width, canvas.width + 300),
-      canvas.height - 12 - 34,
-      VX,
-      getRandomValue(1, 5),
-      SPRITE_SHEET
-    ))
-  }
 }
 
 // The main loop is defined and time is measured
@@ -125,39 +115,39 @@ function loop() {
     )
     floor[1].getImage().onload = floor[1].update(ctx)
   }
+
+  if(generateProbability(cactusProbability)) {
+    cactus.push(new Cactus(
+      getRandomValue(canvas.width - 100, canvas.width + 400),
+      canvas.height - 14 - 34,
+      VX,
+      getRandomValue(0, 2),
+      SPRITE_SHEET
+    ))
+  }
   
-  cactus.forEach((cac, index) => {
-    cac.update(ctx)
-
-    if(cac.getX() <= 0) {
-      cactus.splice(index, 1)
-
-      for(let i = 0; i < cactusNumber; i++) {
-        cactus.push(new Cactus(
-          getRandomValue(canvas.width - 100, canvas.width + 400),
-          canvas.height - 14 - 34,
-          VX,
-          getRandomValue(0, 2),
-          SPRITE_SHEET
-        ))
+  if(cactus.length > 0) { // It will return an error if we iterate an empty cactus array, so
+    cactus.forEach((cac, index) => {
+      cac.update(ctx) // Update the cactus position
+  
+      if(cac.getX() <= 0) { // Delete the cactus that ran out of the window
+        cactus.splice(index, 1)
       }
-
-      cactusNumber = getRandomValue(1, 4)
-    }
-    
-    if(trex.didCollide(cac.getX() + 9, cac.getY() + 2)) {
-      trex.die(ctx)
-
-      if(trex.distance/10 > sessionStorage.getItem('record')) {
-        sessionStorage.setItem('record', Math.floor(trex.distance / 10))
+      
+      if(trex.didCollide(cac.getX() + 9, cac.getY() + 2)) { // If the cactus collided with the trex, you lose
+        trex.die(ctx)
+  
+        if(trex.distance/10 > sessionStorage.getItem('record')) { // Record the record 😜
+          sessionStorage.setItem('record', Math.floor(trex.distance / 10))
+        }
+  
+        gameOver() // Finish the game
       }
-
-      gameOver() // Finish the game
-    }
-  })
+    })
+  }
 }
 
-// Define the function who is going to stop the game
+// Define the function which is going to stop the game
 function gameOver() {
   gameIsRunning = false
   clearInterval(intervals[0])
