@@ -1,4 +1,4 @@
-const GRAVITY = -2.1
+const GRAVITY = -1.9
 
 class TRex {
   constructor(initialY, dx, img) {
@@ -6,7 +6,7 @@ class TRex {
     this.x = 0
     this.y = initialY
     this.bottom = initialY
-    this.dy = 2
+    this.dy = 2.6
     this.dx = dx
     this.dt = 0.5
 
@@ -34,11 +34,11 @@ class TRex {
   }
 
   jumping() {
-    if(this.y - 5 >= this.bottom) { // Is on the bottom?
+    if(this.y - 6 >= this.bottom) { // Is on the bottom?
       this.isJumping = false
       this.y = this.bottom
       this.dt = 0.5
-      this.dy = 3
+      this.dy = 2.6
       this.doubleJump = false
     } else if(this.doubleJump) {
       this.dt += 0.0045
